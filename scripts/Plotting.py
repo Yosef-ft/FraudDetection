@@ -128,4 +128,24 @@ class Plots:
             plt.show()
     
 
-    
+    def geo_analysis(self, data: pd.DataFrame):
+
+        url = "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip"
+
+        gdf = gpd.read_file(url)     
+
+        fig, ax = plt.subplots(1, 1, figsize=(15, 10))
+
+
+        gdf.boundary.plot(ax=ax)
+
+        norm = mcolors.SymLogNorm(linthresh=500, linscale=1.0, vmin=50, vmax=6000) 
+
+
+        data.plot(column='Fraud_Count', ax=ax, legend=True,
+                    legend_kwds={'label': "Number of Fraud Cases",
+                                'orientation': "horizontal",},  
+                    cmap='OrRd', norm=norm)  
+
+        plt.title('Fraud Cases by Country')
+        plt.show()           
