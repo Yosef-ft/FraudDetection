@@ -125,3 +125,33 @@ class DataUtils:
         print(info_df)
 
         return info_df
+
+    def get_country(self, ip, Ip_data):
+        '''
+        This funtion is used to extract country from IP upper and lower bounds
+        '''
+        country = Ip_data.loc[(Ip_data['upper_bound_ip_address'] >= ip) & (Ip_data['lower_bound_ip_address'] <= ip), 'country']
+        if not country.empty:
+            return country.iloc[0]  
+        return None
+    
+
+    def time_features(self, data: pd.DataFrame, date_col: str):
+        '''
+        This fuction is used to extract time based features from data
+
+        Parameter:
+        ---------
+            data(pd.DataFrame):
+            date_col(str): column name contining date variable
+        '''
+
+        data['Hour'] = data[date_col].dt.hour
+        data['quarter'] =   data[date_col].dt.quarter
+        data['month'] =     data[date_col].dt.month
+        data['dayofyear'] = data[date_col].dt.dayofyear
+        data['DayOfWeek'] = data[date_col].dt.day_of_week
+        data['weekdays'] =  data['DayOfWeek'].apply(lambda x: x < 6)
+        data['weekends'] =  data['DayOfWeek'].apply(lambda x: x >= 6)   
+
+        return data    
