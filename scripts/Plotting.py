@@ -4,7 +4,9 @@ import logging
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import geopandas as gpd
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 from statsmodels.distributions.empirical_distribution import ECDF
 
 from Utils import DataUtils
@@ -96,3 +98,34 @@ class Plots:
 
         except Exception as e:
             logger.error(f"Error while plotting ECDF: {e}")        
+
+
+    def bivariant_distribution(self, data:pd.DataFrame, col: str, hue: str, ax = None):
+        '''
+        This function plots columns in respect to another column (plots countplot for two columns)
+
+
+        Parameter:
+        ----------
+            col(str): The column to plot
+            hue(str): The column to compare each col with
+            ax: Axes object to plot on
+            
+        Retruns:
+        --------
+            plt.show()
+        '''
+
+        if ax:
+            sns.countplot(x=col, data=data, hue=hue, palette = 'pastel', ax=ax)
+            ax.tick_params(axis = 'x', rotation=45)
+            ax.set_title(f'Comparing {col} in respect to {hue}')
+        
+        else:
+            fig = plt.figure(figsize=(12,6))
+            sns.countplot(x=col, data=data, hue=hue, palette = 'pastel')
+            plt.tick_params(axis= 'x', rotation=45)
+            plt.show()
+    
+
+    
