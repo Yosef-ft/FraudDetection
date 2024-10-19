@@ -8,6 +8,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 from statsmodels.distributions.empirical_distribution import ECDF
+from statsmodels.tsa.seasonal import seasonal_decompose
 
 from Utils import DataUtils
 from Logger import LOGGER
@@ -149,3 +150,10 @@ class Plots:
 
         plt.title('Fraud Cases by Country')
         plt.show()           
+
+
+    def timeseries_analysis(self, data: pd.DataFrame, period: int, sample_size: int):
+
+        result = seasonal_decompose(data['purchase_value'][:sample_size], model='additive', period=period)
+        result.plot()
+        plt.show()
