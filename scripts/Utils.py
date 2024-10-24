@@ -1,5 +1,6 @@
 import os 
 import sys
+import random
 import logging
 import time
 
@@ -7,6 +8,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import mlflow
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import recall_score, accuracy_score, precision_score, f1_score
+from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
+import tensorflow as tf
 
 from Logger import LOGGER
 logger = LOGGER
@@ -51,6 +58,10 @@ class DataUtils:
             logger.error(f"Error loading data: {e}")
             return None
         
+    def set_seeds(self, seed=42):
+        random.seed(seed)
+        np.random.seed(seed)
+        tf.random.set_seed(seed)
 
     def data_info(self, data) -> pd.DataFrame:
         '''
