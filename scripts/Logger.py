@@ -40,6 +40,9 @@ def setup_logger():
     logger.addHandler(console_handler)
     logger.setLevel(logging.DEBUG)
 
+    mlflow_logger = logging.getLogger("mlflow")
+    mlflow_logger.setLevel(logging.ERROR)
+
     return logger
 
 
