@@ -348,3 +348,70 @@ class ModelUtils:
         plt.ylabel('stopped epochs')
         plt.title('Stopped epoch per model')
         plt.show()
+
+
+    def plot_evaluation_model(self, credit: bool):
+
+        if credit:
+            auc_roc = pd.read_csv('../report/creditCard_Models/AUC-ROC.csv')
+        else:
+            auc_roc = pd.read_csv('../report/Fraud_Models/AUC-ROC.csv')
+        auc_roc.dropna(inplace=True)
+
+        if credit:
+            precision = pd.read_csv('../report/creditCard_Models/Precision (1).csv')
+        else:
+            precision = pd.read_csv('../report/Fraud_Models/Precision (1).csv')
+        precision.dropna(inplace=True)
+
+        if credit:
+            recall = pd.read_csv('../report/creditCard_Models/Recall (1).csv')
+        else:
+            recall = pd.read_csv('../report/Fraud_Models/Recall (1).csv')
+        recall.dropna(inplace=True)
+
+        if credit:
+            f1 = pd.read_csv('../report/creditCard_Models/f1.csv')
+        else:
+            f1 = pd.read_csv('../report/Fraud_Models/f1.csv')
+        f1.dropna(inplace=True)    
+
+        fig, axes = plt.subplots(nrows=2, ncols= 2, figsize=(12,8))
+        axes = axes.flatten()
+        sns.barplot(data=f1, y='Run', x='f1', palette='pastel', hue='f1', legend=False, ax=axes[0])
+
+        axes[0].set_xlabel('F1')
+        axes[0].set_ylabel('')
+        axes[0].set_title('F1 of models')
+
+        axes[0].tick_params(axis='y', rotation=45)
+
+
+        sns.barplot(data=recall, y='Run', x='Recall', palette='pastel', hue='Recall', legend=False, ax=axes[1])
+
+        axes[1].set_xlabel('recall')
+        axes[1].set_ylabel('')
+        axes[1].set_title('Recall of models')
+
+        axes[1].tick_params(axis='y', rotation=45)
+
+
+        sns.barplot(data=precision, x='Precision', y='Run', palette='pastel', hue='Run', legend=False, ax=axes[2])
+
+        axes[2].set_xlabel('Precision')
+        axes[2].set_ylabel('')
+        axes[2].set_title('Precision of models')
+
+        axes[2].tick_params(axis='y', rotation=45)
+
+
+        sns.barplot(data=auc_roc, y='Run', x='AUC-ROC', palette='pastel', hue='AUC-ROC', legend=False, ax=axes[3])
+
+        axes[3].set_xlabel('AUC-ROC')
+        axes[3].set_ylabel('')
+        axes[3].set_title('AUC-ROC of models')
+
+        axes[3].tick_params(axis='y', rotation=45)
+
+        plt.subplots_adjust(wspace=0.4, hspace=0.4)
+        plt.show()            
