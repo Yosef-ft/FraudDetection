@@ -309,3 +309,29 @@ class ModelUtils:
 
         end_time = time.time()
         logger.info(f"Training 3 different models took {round(end_time - start_time, 2)} seconds")      
+
+
+    def plot_evaluate_neurons(self, credit: bool, metrics: str):
+        if credit:
+            data = pd.read_csv(f'../report/creditCard_Models/{metrics}.csv')
+            val_data = pd.read_csv(f'../report/creditCard_Models/val_{metrics}.csv')
+        else:
+            data = pd.read_csv(f'../report/Fraud_models/{metrics}.csv')
+            val_data = pd.read_csv(f'../report/Fraud_models/val_{metrics}.csv')
+        
+        fig, axes = plt.subplots(ncols=2, nrows=1, figsize=(18,8))
+
+        sns.set_style("whitegrid")
+
+        sns.lineplot(data=data, x='step', y='value', hue='Run', palette='pastel', linewidth=2.5, ax=axes[0])
+        sns.lineplot(data=val_data, x='step', y='value', hue='Run', palette='pastel', linewidth=2.5, ax=axes[1])
+
+        axes[0].set_xlabel('Epochs', fontsize=12)
+        axes[0].set_ylabel(f'{metrics}', fontsize=12)
+        axes[0].set_title(f'{metrics} vs. Epochs by model', fontsize=14)
+
+        axes[1].set_xlabel('Epochs', fontsize=12)
+        axes[1].set_ylabel(f'{metrics}', fontsize=12)
+        axes[1].set_title(f'val_{metrics} vs. Epochs by model', fontsize=14)
+
+        plt.show();    
