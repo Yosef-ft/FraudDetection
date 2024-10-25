@@ -335,3 +335,16 @@ class ModelUtils:
         axes[1].set_title(f'val_{metrics} vs. Epochs by model', fontsize=14)
 
         plt.show();    
+
+    def plot_epochs(self, credit: bool):
+        if credit:
+            epochs = pd.read_csv(f'../report/creditCard_Models/stopped_epoch.csv')
+        else: 
+            epochs = pd.read_csv(f'../report/Fraud_Models/stopped_epoch.csv')
+        epochs.dropna(inplace=True)
+
+        sns.barplot(data=epochs, x='Run', y='stopped_epoch', palette='pastel', hue='stopped_epoch', legend=False)
+        plt.xlabel('Models')
+        plt.ylabel('stopped epochs')
+        plt.title('Stopped epoch per model')
+        plt.show()
