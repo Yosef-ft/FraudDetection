@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mlflow import MlflowClient
 from pprint import pprint
+from datetime import datetime
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -16,6 +17,14 @@ from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSe
 from sklearn.preprocessing import LabelEncoder
 from imblearn.over_sampling import SMOTE
 import mlflow
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import InputLayer, LSTM, Dense, Conv1D, MaxPooling1D, Flatten,Reshape, SimpleRNN, RNN
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping 
+from tensorflow.keras.metrics import Accuracy, Precision, F1Score, Recall
+from tensorflow.keras.losses import BinaryCrossentropy
+from tensorflow.keras.optimizers import Adam
+import tensorflow as tf
 
 from Logger import LOGGER
 logger = LOGGER
@@ -212,4 +221,91 @@ class ModelUtils:
         end_time = time.time()
 
         logger.info(f"Searching for the best params for {type(model).__name__} took {round(end_time - start_time, 2)} seconds\n\n")
+
+
      
+    def train_neurals(self, model_name: str,X_train, y_train, X_val,y_val ,credit):
+        mlflow.set_tracking_uri("http://127.0.0.1:5000")
+
+        times = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        cp = ModelCheckpoint(f'../Models/{model_name}_model_{times}.keras', save_best_only=True)
+        callback = EarlyStopping(monitor='val_accuracy', patience=3)
+
+        input_shape = (30,) if credit else (203,1)
+        if model_name == 'LSTM' and credit:
+            input_shape = (30,1)
+        reshape = (30,1) if credit else (203,1)
+        fraud_experiments =mlflow.set_experiment("creditCard_Models") if credit else mlflow.set_experiment("Fraud_Models")
+        
+        if model_name == 'LSTM':
+            
+            model = Sequential()
+            model.add(InputLayer(input_shape=input_shape))
+            model.add(LSTM(64, activation='tanh', return_sequences=False))
+            model.add(Dense(8, activation='relu'))
+            model.add(Dense(1, activation='sigmoid'))
+
+            model.compile(
+                loss=BinaryCrossentropy(),
+                optimizer=Adam(learning_rate=0.01),
+                metrics=['accuracy', 'precision', 'recall', F1Score()]
+            )
+
+        elif model_name == 'CNN':
+            model = Sequential()
+            model.add(InputLayer(input_shape=input_shape)) # fraud 203
+            model.add(Reshape(reshape))
+            model.add(Conv1D(filters=64, kernel_size=3, activation='relu'))
+            model.add(MaxPooling1D(pool_size=2))
+            model.add(Flatten())
+            model.add(Dense(8, activation='relu'))
+            model.add(Dense(1, activation='sigmoid')) 
+
+            model.compile(
+                loss=BinaryCrossentropy(),
+                optimizer=Adam(learning_rate=0.01),
+                metrics=['accuracy', 'precision', 'recall', F1Score()]
+            )
+
+        elif model_name == 'RNN':
+            model = Sequential()
+            model.add(InputLayer(input_shape=input_shape))
+            model.add(Reshape(reshape))
+            model.add(SimpleRNN(50))
+            model.add(Dense(8, activation='relu'))
+            model.add(Dense(1, activation='sigmoid'))
+
+            model.compile(
+                loss=BinaryCrossentropy(),
+                optimizer=Adam(learning_rate=0.01),
+                metrics=['accuracy', 'precision', 'recall', F1Score()]
+            )        
+
+        start_time = time.time()
+        logger.info(f"Start training {model_name} model...")
+
+        mlflow.tensorflow.autolog()
+        with mlflow.start_run(run_name=f'Fraud_{model_name}'):
+            history = model.fit(X_train[:100], y_train[:100], validation_data=(X_val[:100], y_val[:100]),
+                            epochs=50, callbacks=[cp, callback], batch_size = 128, verbose=0)
+
+        end_time = time.time()
+
+        logger.info(f"Training {model_name} took {round(end_time - start_time, 2)} seconds")
+      
+
+
+    def train_neural_models(self, X_train, y_train, X_val, y_val, credit = False):
+        models = ['LSTM', 'CNN', 'RNN']
+
+        if credit:
+            logger.info(f"Start training {len(models)} models, with credit card dataset....")
+        else:
+            logger.info(f"Start training {len(models)} models, with ecommerce fraud dataset....")
+        start_time = time.time()
+
+        for model in models:
+            self.train_neurals(model, X_train, y_train, X_val, y_val, credit)
+
+        end_time = time.time()
+        logger.info(f"Training 3 different models took {round(end_time - start_time, 2)} seconds")      
