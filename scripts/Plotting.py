@@ -7,6 +7,7 @@ import seaborn as sns
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
+import matplotlib.image as mpimg
 from statsmodels.distributions.empirical_distribution import ECDF
 from statsmodels.tsa.seasonal import seasonal_decompose
 
@@ -157,3 +158,14 @@ class Plots:
         result = seasonal_decompose(data['purchase_value'][:sample_size], model='additive', period=period)
         result.plot()
         plt.show()
+
+    def show_image(self, path):
+        '''
+        This function is used to show saved images
+        '''
+        img = mpimg.imread(path)
+        plt.figure(figsize=(20,8))
+        plt.imshow(img)
+        plt.axis('off')  
+        plt.show()
+
