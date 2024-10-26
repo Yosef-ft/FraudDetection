@@ -32,6 +32,9 @@ logger = LOGGER
 class ModelUtils:
 
     def setUp_mlflow(self):
+        '''
+        This function is used to setup mlflow by creating 2 experiments with run names Fraud_Models and creditCard_Models 
+        '''
         logger.info("Setting up Mlflow")
         client = MlflowClient(tracking_uri="http://127.0.0.1:5000")
 
@@ -86,6 +89,18 @@ class ModelUtils:
     
 
     def split_data(self, data:pd.DataFrame):
+        '''
+        This is used to split the data to 20% test size. 
+        The function also uses SMOTE to handle the imbalance class
+
+        Patameters:
+        -----------
+            data(pd.DataFrame)
+
+        Return:
+        -------
+            X_train, X_val, y_train, y_val
+        '''
 
         try:
             X_fraud = data.drop(columns=["class", "purchase_time", "signup_time", "user_id", "device_id", "ip_address"])
@@ -111,6 +126,18 @@ class ModelUtils:
         return X_train, X_val, y_train, y_val
     
     def param_identifier(self, model, credit = False):
+        '''
+        This function is used to map the model parameters by passing models
+
+        Parameters:
+        ----------
+            model: Instance of scikit learn models
+            credit(bool): This is used to to identify which dataset to use
+
+        Retrun:
+        ------
+            params, run_name, artifact_path
+        '''
         mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
 
@@ -182,6 +209,14 @@ class ModelUtils:
         return params, run_name, artifact_path
 
     def best_model(self, X_train, y_train, X_val,y_val,model, credit=False):
+        '''
+        This function is used to identify the best scikit learn model by using randomized search cv
+
+        Parameter:
+        ----------
+            X_train, y_train, X_val,y_val,model
+            credit(bool): This is used to to identify which dataset to use
+        '''
 
         if credit:
             fraud_experiments = mlflow.set_experiment("creditCard_Models")
@@ -225,6 +260,16 @@ class ModelUtils:
 
      
     def train_neurals(self, model_name: str,X_train, y_train, X_val,y_val ,credit):
+        '''
+        This funcion is used to train neural networks
+
+        Parameter:
+        ----------
+            model_name(str): The name of the model like LSTM, CNN, RNN
+            X_train, y_train, X_val,y_val
+            credit(bool): This is used to to identify which dataset to use
+        '''
+
         mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
         times = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -296,6 +341,14 @@ class ModelUtils:
 
 
     def train_neural_models(self, X_train, y_train, X_val, y_val, credit = False):
+        '''
+        This funcion is used to train 3 neurla network models
+        
+        Parameter:
+        ----------
+            X_train, y_train, X_val, y_val
+            credit(bool): This is used to to identify which dataset to use
+        '''
         models = ['LSTM', 'CNN', 'RNN']
 
         if credit:
@@ -312,6 +365,15 @@ class ModelUtils:
 
 
     def plot_evaluate_neurons(self, credit: bool, metrics: str):
+        '''
+        This function is used to evaluate trained neural network models
+
+        Parameter:
+        ----------
+            credit(bool): This is used to to identify which dataset to use
+        
+        '''
+
         if credit:
             data = pd.read_csv(f'../report/creditCard_Models/{metrics}.csv')
             val_data = pd.read_csv(f'../report/creditCard_Models/val_{metrics}.csv')
@@ -337,6 +399,13 @@ class ModelUtils:
         plt.show();    
 
     def plot_epochs(self, credit: bool):
+        '''
+        This function plots the stopped epochs for a given dataset:
+
+        Parameter:
+        ---------
+            credit(bool): This is used to to identify which dataset to use
+        '''
         if credit:
             epochs = pd.read_csv(f'../report/creditCard_Models/stopped_epoch.csv')
         else: 
@@ -351,7 +420,14 @@ class ModelUtils:
 
 
     def plot_evaluation_model(self, credit: bool):
+        '''
+        This is used to evaluate trained scikit learn modles
 
+        Parameter:
+        ----------
+            credit(bool): This is used to to identify which dataset to use
+        '''
+        
         if credit:
             auc_roc = pd.read_csv('../report/creditCard_Models/AUC-ROC.csv')
         else:
