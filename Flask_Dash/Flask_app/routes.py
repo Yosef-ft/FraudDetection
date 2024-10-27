@@ -1,21 +1,27 @@
-from flask import Flask
-from flask import request
-import pandas as pd
-from .serve_model import predict
 import logging
 from logging.handlers import RotatingFileHandler
 
+from flask import Flask
+from flask import request, redirect
+import pandas as pd
+from .serve_model import predict
 
-app = Flask(__name__)
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from werkzeug.serving import run_simple
+
+from Dash_app.dashboard import create_dash_app
+
+server = Flask(__name__)
+dash_app = create_dash_app(server)
 
 file_handler = RotatingFileHandler('app.log', maxBytes=10240, backupCount=10)
 file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s'))
 file_handler.setLevel(logging.DEBUG)
 
-app.logger.addHandler(file_handler)
+server.logger.addHandler(file_handler)
 
 
-@app.post('/predict')
+@server.post('/predict')
 def prediction():
 
     data = pd.DataFrame({
@@ -30,13 +36,19 @@ def prediction():
         'country' : [request.form['country']],
     })
 
-    app.logger.debug("Got the required data from user.")
+    server.logger.debug("Got the required data from user.")
 
     prediction = predict(data)[0]
-    app.logger.info(f"The model successfully predicted with a value of {prediction}")
+    server.logger.info(f"The model successfully predicted with a value of {prediction}")
     if prediction == 1:
         result = 'Fraudulent'
     else:
         result = 'Non fraudulent'
     
     return result
+
+
+
+@server.route('/dashboard/')
+def render_dashboard():
+    return redirect('/app1')

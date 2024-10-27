@@ -1,9 +1,12 @@
+# dashboard.py
 import dash
-import dash_html_components as html
+from dash import html
 
-app = dash.Dash(
-    __name__,
-    requests_pathname_prefix='/app1/'
-)
-
-app.layout = html.Div("Dash app 1")
+def create_dash_app(flask_app):
+    app = dash.Dash(
+        __name__,
+        server=flask_app,  
+        routes_pathname_prefix='/app1/'  
+    )
+    app.layout = html.Div("Dash app 1")
+    return app
