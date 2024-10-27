@@ -1,0 +1,203 @@
+purchase_value
+age
+Hour
+quarter
+month
+dayofyear
+DayOfWeek
+weekdays
+weekends
+trasaction_frequency
+velocity
+Country_Afghanistan
+Country_Albania
+Country_Algeria
+Country_Angola
+Country_Antigua and Barbuda
+Country_Argentina
+Country_Armenia
+Country_Australia
+Country_Austria
+Country_Azerbaijan
+Country_Bahamas
+Country_Bahrain
+Country_Bangladesh
+Country_Barbados
+Country_Belarus
+Country_Belgium
+Country_Belize
+Country_Benin
+Country_Bermuda
+Country_Bhutan
+Country_Bolivia
+Country_Bonaire; Sint Eustatius; Saba
+Country_Bosnia and Herzegowina
+Country_Botswana
+Country_Brazil
+Country_British Indian Ocean Territory
+Country_Brunei Darussalam
+Country_Bulgaria
+Country_Burkina Faso
+Country_Burundi
+Country_Cambodia
+Country_Cameroon
+Country_Canada
+Country_Cape Verde
+Country_Cayman Islands
+Country_Chile
+Country_China
+Country_Colombia
+Country_Congo
+Country_Congo The Democratic Republic of The
+Country_Costa Rica
+Country_Cote D'ivoire
+Country_Croatia (LOCAL Name: Hrvatska)
+Country_Cuba
+Country_Curacao
+Country_Cyprus
+Country_Czech Republic
+Country_Denmark
+Country_Djibouti
+Country_Dominica
+Country_Dominican Republic
+Country_Ecuador
+Country_Egypt
+Country_El Salvador
+Country_Estonia
+Country_Ethiopia
+Country_European Union
+Country_Faroe Islands
+Country_Fiji
+Country_Finland
+Country_France
+Country_Gabon
+Country_Gambia
+Country_Georgia
+Country_Germany
+Country_Ghana
+Country_Gibraltar
+Country_Greece
+Country_Guadeloupe
+Country_Guam
+Country_Guatemala
+Country_Haiti
+Country_Honduras
+Country_Hong Kong
+Country_Hungary
+Country_Iceland
+Country_India
+Country_Indonesia
+Country_Iran (ISLAMIC Republic Of)
+Country_Iraq
+Country_Ireland
+Country_Israel
+Country_Italy
+Country_Jamaica
+Country_Japan
+Country_Jordan
+Country_Kazakhstan
+Country_Kenya
+Country_Korea Republic of
+Country_Kuwait
+Country_Kyrgyzstan
+Country_Lao People's Democratic Republic
+Country_Latvia
+Country_Lebanon
+Country_Lesotho
+Country_Libyan Arab Jamahiriya
+Country_Liechtenstein
+Country_Lithuania
+Country_Luxembourg
+Country_Macau
+Country_Macedonia
+Country_Madagascar
+Country_Malawi
+Country_Malaysia
+Country_Maldives
+Country_Malta
+Country_Mauritius
+Country_Mexico
+Country_Moldova Republic of
+Country_Monaco
+Country_Mongolia
+Country_Montenegro
+Country_Morocco
+Country_Mozambique
+Country_Myanmar
+Country_Namibia
+Country_Nauru
+Country_Nepal
+Country_Netherlands
+Country_New Caledonia
+Country_New Zealand
+Country_Nicaragua
+Country_Niger
+Country_Nigeria
+Country_Norway
+Country_Oman
+Country_Other
+Country_Pakistan
+Country_Palestinian Territory Occupied
+Country_Panama
+Country_Papua New Guinea
+Country_Paraguay
+Country_Peru
+Country_Philippines
+Country_Poland
+Country_Portugal
+Country_Puerto Rico
+Country_Qatar
+Country_Reunion
+Country_Romania
+Country_Russian Federation
+Country_Rwanda
+Country_Saint Kitts and Nevis
+Country_Saint Martin
+Country_San Marino
+Country_Saudi Arabia
+Country_Senegal
+Country_Serbia
+Country_Seychelles
+Country_Singapore
+Country_Slovakia (SLOVAK Republic)
+Country_Slovenia
+Country_South Africa
+Country_South Sudan
+Country_Spain
+Country_Sri Lanka
+Country_Sudan
+Country_Sweden
+Country_Switzerland
+Country_Syrian Arab Republic
+Country_Taiwan; Republic of China (ROC)
+Country_Tajikistan
+Country_Tanzania United Republic of
+Country_Thailand
+Country_Trinidad and Tobago
+Country_Tunisia
+Country_Turkey
+Country_Turkmenistan
+Country_Uganda
+Country_Ukraine
+Country_United Arab Emirates
+Country_United Kingdom
+Country_United States
+Country_Uruguay
+Country_Uzbekistan
+Country_Vanuatu
+Country_Venezuela
+Country_Viet Nam
+Country_Virgin Islands (U.S.)
+Country_Yemen
+Country_Zambia
+Country_Zimbabwe
+sex_F
+sex_M
+browser_Chrome
+browser_FireFox
+browser_IE
+browser_Opera
+browser_Safari
+source_Ads
+source_Direct
+source_SEO
