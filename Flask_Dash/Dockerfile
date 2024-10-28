@@ -14,4 +14,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Run serve_model.py when the container launches
-CMD ["python", "-m", "flask","--app", "Flask_app/routes", "run", "--host=0.0.0.0", "--port=5000"]
+CMD ["python", "-m", "flask","--app", "Flask_app/routes", "run", "--host=0.0.0.0", "--port=5000", "--debug"]
