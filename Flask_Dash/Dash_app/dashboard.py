@@ -96,4 +96,23 @@ def create_dash_app(flask_app):
             
         else:
             return html.Div("Failed to load data")  
+        
+
+    @app.callback(Output('date-timeseries', 'figure'), Input('interval', 'n_intervals')) 
+    def plot_date_timeseries(_):     
+        response = requests.get("http://127.0.0.1:5000/data") 
+        if response.status_code == 200:
+            data = pd.DataFrame(response.json())
+           
+            data['purchase_time'] = pd.to_datetime(data['purchase_time'])
+            fraud_data = data[data['class'] == 1]
+            fraud_count = fraud_data.groupby(data['purchase_time'].dt.date).size().reset_index(name='Fraud_Count')
+            fig = px.line(fraud_count, y='Fraud_Count', x='purchase_time')
+
+            return fig
+            
+        else:
+            return html.Div("Failed to load data")          
+        
+
     return app
