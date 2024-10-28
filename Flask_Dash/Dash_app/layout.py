@@ -81,7 +81,15 @@ def create_layout(app):
         ]),
         dbc.Row([
             dbc.Col([
-                dcc.Graph(id='date-timeseries')
+                html.H3("Timeseries analysis"),
+                dcc.RadioItems(
+                    ['Date', 'Month', 'Day', 'Hour', 'Minutes'],
+                    'Day',
+                    id='time-value', 
+                    inline=True,
+                ),
+                dcc.Graph(id='timeseries-plots')
             ])
-        ])
+        ]),
+
     ], fluid=True)
