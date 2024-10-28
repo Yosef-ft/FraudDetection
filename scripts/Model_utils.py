@@ -115,7 +115,7 @@ class ModelUtils:
             X_fraud, y_fraud = smote.fit_resample(X_fraud, y_fraud)
             logger.info('Splitting Fraud data...')
             X_train, X_val, y_train, y_val = train_test_split(X_fraud, y_fraud, test_size=0.2, random_state=42)        
-            joblib.dump(le, '../flask_app/Encoder/label_encoder.pkl')
+            # joblib.dump(le, '../flask_app/Encoder/label_encoder.pkl')
         except:
             X_creditCard = data.drop(columns=["Class"])
             y_creditCard = data["Class"]
