@@ -2,3 +2,6 @@ pandas
 Flask
 joblib
 scikit-learn
+requests
+dash-bootstrap-components
+geopandas==1.0.1
