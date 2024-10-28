@@ -125,6 +125,18 @@ def create_dash_app(flask_app):
         else:
             return html.Div("Failed to load data")       
         
-        
+    @app.callback(Output('device-distribution', 'figure'), Input('row-slider', 'value')) 
+    def plot_devide_distribution(row_value):
+        response = requests.get("http://127.0.0.1:5000/data") 
+        if response.status_code == 200:
+            data = pd.DataFrame(response.json())
+            fraud_case = data[data['class'] == 1].groupby(by='device_id').size()
+            fraud_case = pd.DataFrame(fraud_case).rename({0 : "Count"}, axis=1).sort_values(by='Count', ascending=False).head(row_value)
+            fig = px.bar(fraud_case,x=fraud_case.index, y='Count')            
+
+            return fig
+            
+        else:
+            return html.Div("Failed to load data")          
 
     return app
