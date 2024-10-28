@@ -104,5 +104,18 @@ def create_layout(app):
                 ), style={'width': '49%', 'padding': '0px 20px 20px 20px'}),
 
             ])
+        ]),
+        dbc.Row([
+            dbc.Col([
+                dcc.Graph(id='gender-distribution')
+            ], md= 6),
+            dbc.Col([
+                dcc.Graph(id='browser-distribution')
+            ], md=6),
+        ]), 
+        dbc.Row([
+            dbc.Col([
+                dcc.Graph(id='source-distribution')
+            ], md=6)            
         ])
     ], fluid=True)
