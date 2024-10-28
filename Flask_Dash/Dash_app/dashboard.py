@@ -6,6 +6,7 @@ import requests
 import pandas as pd
 import geopandas as gpd
 import plotly.express as px
+import plotly.graph_objects as go
 
 
 from .layout import create_layout
@@ -137,6 +138,75 @@ def create_dash_app(flask_app):
             return fig
             
         else:
-            return html.Div("Failed to load data")          
+            return html.Div("Failed to load data")   
+
+
+    @app.callback(Output('gender-distribution', 'figure'), 
+                  Output('browser-distribution', 'figure'), 
+                  Output('source-distribution', 'figure'), 
+                  Input('interval', 'n_intervals'))        
+    
+    def plot_distributions(_):
+        response = requests.get("http://127.0.0.1:5000/data") 
+        if response.status_code == 200:
+            data = pd.DataFrame(response.json())
+            gender=data.groupby(by=['sex', 'class']).size()   
+            gender = gender.unstack()
+            gender = gender.reset_index().melt(id_vars='sex', var_name='class', value_name='Count')         
+            
+            fig = go.Figure()
+
+            
+            for class_value in gender['class'].unique():
+                temp_df = gender[gender['class'] == class_value]
+                fig.add_trace(go.Bar(
+                    x=temp_df['sex'],
+                    y=temp_df['Count'],
+                    name=f'Class {class_value}'
+                ))
+
+            fig.update_layout(barmode='group', title='Count of Classes by Gender', 
+                            xaxis_title='Gender', yaxis_title='Count')
+            
+            browser=data.groupby(by=['browser', 'class']).size()   
+            browser = browser.unstack()
+            browser = browser.reset_index().melt(id_vars='browser', var_name='class', value_name='Count')         
+            
+            fig2 = go.Figure()
+
+            
+            for class_value in browser['class'].unique():
+                temp_df = browser[browser['class'] == class_value]
+                fig2.add_trace(go.Bar(
+                    x=temp_df['browser'],
+                    y=temp_df['Count'],
+                    name=f'Class {class_value}'
+                ))
+
+            fig2.update_layout(barmode='group', title='Count of Classes by Browser', 
+                            xaxis_title='Browser', yaxis_title='Count')         
+
+            source=data.groupby(by=['source', 'class']).size()   
+            source = source.unstack()
+            source = source.reset_index().melt(id_vars='source', var_name='class', value_name='Count')         
+            
+            fig3 = go.Figure()
+
+            
+            for class_value in source['class'].unique():
+                temp_df = source[source['class'] == class_value]
+                fig3.add_trace(go.Bar(
+                    x=temp_df['source'],
+                    y=temp_df['Count'],
+                    name=f'Class {class_value}'
+                ))
+
+            fig3.update_layout(barmode='group', title='Count of Classes by Source', 
+                            xaxis_title='Source', yaxis_title='Count')                   
+            
+            return fig, fig2 , fig3
+            
+        else:
+            return html.Div("Failed to load data")         
 
     return app
