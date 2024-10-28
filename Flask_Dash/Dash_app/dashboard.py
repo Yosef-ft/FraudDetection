@@ -144,6 +144,7 @@ def create_dash_app(flask_app):
     @app.callback(Output('gender-distribution', 'figure'), 
                   Output('browser-distribution', 'figure'), 
                   Output('source-distribution', 'figure'), 
+                  Output('age-distribution', 'figure'), 
                   Input('interval', 'n_intervals'))        
     
     def plot_distributions(_):
@@ -202,9 +203,13 @@ def create_dash_app(flask_app):
                 ))
 
             fig3.update_layout(barmode='group', title='Count of Classes by Source', 
-                            xaxis_title='Source', yaxis_title='Count')                   
+                            xaxis_title='Source', yaxis_title='Count')           
+
+            fig4 = px.histogram(data, x='age')      
+            fig4.update_layout(barmode='group', title='Age distribution', 
+                            xaxis_title='Age', yaxis_title='Count')                
             
-            return fig, fig2 , fig3
+            return fig, fig2 , fig3, fig4
             
         else:
             return html.Div("Failed to load data")         

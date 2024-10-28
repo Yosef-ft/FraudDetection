@@ -116,6 +116,9 @@ def create_layout(app):
         dbc.Row([
             dbc.Col([
                 dcc.Graph(id='source-distribution')
-            ], md=6)            
+            ], md=6),       
+            dbc.Col([
+                dcc.Graph(id='age-distribution')
+            ], md=6)                      
         ])
     ], fluid=True)
