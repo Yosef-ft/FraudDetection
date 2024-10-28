@@ -78,5 +78,10 @@ def create_layout(app):
             dbc.Col([
                 dcc.Graph(id='browser-fraud'),
             ])
+        ]),
+        dbc.Row([
+            dbc.Col([
+                dcc.Graph(id='date-timeseries')
+            ])
         ])
     ], fluid=True)
