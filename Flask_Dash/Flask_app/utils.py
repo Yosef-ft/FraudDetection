@@ -80,3 +80,29 @@ class Utils:
 
         data = data[column_order]
         return data
+    
+
+    def trasaction_summary(self, data: pd.DataFrame, include_other: bool):
+        '''
+        This funciont is used to calculate the total transactions, fraud cases, and fraud percentages
+
+        Parameter:
+        ---------
+            data(pd.DataFrame)
+            include_other(bool): This parameter is used to include Other countries that are not identified by ID
+
+        Return:
+        -------
+            total transactions, fraud cases, and fraud percentages
+        '''
+
+        if not include_other:
+            data_counties = data.loc[data['Country'] != 'Other']
+        else:
+            data_counties = data
+
+        total_transaction = data_counties.shape[0]
+        fraud_cases = data_counties.loc[data_counties['class'] == 1].shape[0]
+        fraud_percentage = round((fraud_cases / total_transaction) * 100, 2)
+
+        return total_transaction, fraud_cases, fraud_percentage
