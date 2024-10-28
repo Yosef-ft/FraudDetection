@@ -82,14 +82,27 @@ def create_layout(app):
         dbc.Row([
             dbc.Col([
                 html.H3("Timeseries analysis"),
-                dcc.RadioItems(
+                html.Div(dcc.RadioItems(
                     ['Date', 'Month', 'Day', 'Hour', 'Minutes'],
                     'Day',
                     id='time-value', 
                     inline=True,
-                ),
+                ), style={"margin-right": "30px"}),
                 dcc.Graph(id='timeseries-plots')
             ])
         ]),
+        dbc.Row([
+            dbc.Col([
+                dcc.Graph(id='device-distribution'),
+                html.Div(dcc.Slider(
+                    min=100,
+                    max=3000,
+                    step=500,
+                    value=800,
+                    id = 'row-slider',
+                    
+                ), style={'width': '49%', 'padding': '0px 20px 20px 20px'}),
 
+            ])
+        ])
     ], fluid=True)
