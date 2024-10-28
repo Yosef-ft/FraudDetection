@@ -52,3 +52,9 @@ def prediction():
 @server.route('/dashboard/')
 def render_dashboard():
     return redirect('/app1')
+
+
+@server.route('/data')
+def read_data():
+    df = pd.read_csv('data/Fraud_country_Data.csv')
+    return df.to_json(orient='records')
