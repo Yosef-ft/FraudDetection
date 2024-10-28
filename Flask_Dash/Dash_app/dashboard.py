@@ -98,21 +98,33 @@ def create_dash_app(flask_app):
             return html.Div("Failed to load data")  
         
 
-    @app.callback(Output('date-timeseries', 'figure'), Input('interval', 'n_intervals')) 
-    def plot_date_timeseries(_):     
+    @app.callback(Output('timeseries-plots', 'figure'), Input('time-value', 'value')) 
+    def plot_date_timeseries(time_interval):     
         response = requests.get("http://127.0.0.1:5000/data") 
         if response.status_code == 200:
             data = pd.DataFrame(response.json())
            
             data['purchase_time'] = pd.to_datetime(data['purchase_time'])
             fraud_data = data[data['class'] == 1]
-            fraud_count = fraud_data.groupby(data['purchase_time'].dt.date).size().reset_index(name='Fraud_Count')
+            
+            if time_interval == 'Date':
+                fraud_count = fraud_data.groupby(data['purchase_time'].dt.date).size().reset_index(name='Fraud_Count')
+            elif time_interval == 'Month':
+                fraud_count = fraud_data.groupby(data['purchase_time'].dt.month).size().reset_index(name='Fraud_Count')
+            elif time_interval == 'Day':
+                fraud_count = fraud_data.groupby(data['purchase_time'].dt.day).size().reset_index(name='Fraud_Count')
+            elif time_interval == 'Hour':
+                fraud_count = fraud_data.groupby(data['purchase_time'].dt.hour).size().reset_index(name='Fraud_Count')
+            elif time_interval  == 'Minutes':
+                fraud_count = fraud_data.groupby(data['purchase_time'].dt.minute).size().reset_index(name='Fraud_Count')
+
             fig = px.line(fraud_count, y='Fraud_Count', x='purchase_time')
 
             return fig
             
         else:
-            return html.Div("Failed to load data")          
+            return html.Div("Failed to load data")       
+        
         
 
     return app
