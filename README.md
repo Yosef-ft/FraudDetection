@@ -4,12 +4,10 @@ This project aims to develop robust and accurate fraud detection models. he mode
 
 ## Project Goals
 1. Data Analysis and Preprocessing
-
-## Next step
-1. Model Building and Training
-2. Model Explainability analysis
-3. Model Deployment and API Development
-4. Build a Dashboard with Flask and Dash
+2. Model Building and Training
+3. Model Explainability analysis
+4. Model Deployment and API Development
+5. Build a Dashboard with Flask and Dash
 
 ## Getting Started
 ### Prerequisites
@@ -33,3 +31,15 @@ Install the required packages:
 pip install -r requirements.txt
 ```
 
+### Viewing the Dashboard
+To view the dashboard, follow these steps:
+
+1. Run Notebooks: Run all the Jupyter notebooks in the repository.
+2. Create a Report Folder: In the Flask_Dash directory, create a folder named report.
+3. Download Experiment Plots from MLflow: Inside MLflow, download the experiment plots. Save them to the Flask_Dash/report directory.
+
+Run Docker Compose:
+Use the following command to build and start the Docker containers:
+```
+docker compose up --build
+```
