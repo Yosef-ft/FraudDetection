@@ -19,7 +19,7 @@ def create_dash_app(flask_app):
     app = dash.Dash(
         __name__,
         server=flask_app,
-        routes_pathname_prefix='/app1/',
+        routes_pathname_prefix='/dashboard/',
         external_stylesheets=[dbc.themes.BOOTSTRAP]
     )
     

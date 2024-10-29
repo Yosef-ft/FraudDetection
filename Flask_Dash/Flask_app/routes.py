@@ -51,7 +51,7 @@ def prediction():
 
 @server.route('/dashboard/')
 def render_dashboard():
-    return redirect('/app1')
+    return redirect('/dashboard')
 
 
 @server.route('/data')
