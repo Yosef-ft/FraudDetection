@@ -112,39 +112,43 @@ class Utils:
         return total_transaction, fraud_cases, fraud_percentage
 
 
-    # def plot_evaluate_neurons(self, credit: bool, metrics: str):
-    #     '''
-    #     This function is used to evaluate trained neural network models
+    def plot_evaluate_neurons(self, metrics: str):
+        '''
+        This function is used to evaluate trained neural network models
 
-    #     Parameter:
-    #     ----------
-    #         credit(bool): This is used to to identify which dataset to use
+        Parameter:
+        ----------
+            metrics(str): This is used to to identify which dataset to use
         
-    #     '''
+        '''
 
-    #     if credit:
-    #         data = pd.read_csv(f'../report/creditCard_Models/{metrics}.csv')
-    #         val_data = pd.read_csv(f'../report/creditCard_Models/val_{metrics}.csv')
-    #     else:
-    #         data = pd.read_csv(f'../report/Fraud_models/{metrics}.csv')
-    #         val_data = pd.read_csv(f'../report/Fraud_models/val_{metrics}.csv')
+        data = pd.read_csv(f'../report/Fraud_models/{metrics}.csv')
+        val_data = pd.read_csv(f'../report/Fraud_models/{metrics}.csv')
         
-    #     fig, axes = plt.subplots(ncols=2, nrows=1, figsize=(18,8))
+        # sns.lineplot(data=val_data, x='step', y='value', hue='Run', palette='pastel', linewidth=2.5, ax=axes[1])
 
-    #     sns.set_style("whitegrid")
+        if 'val' in metrics:
+            fig = px.line(val_data, x='step', y='value', line_group='Run', 
+                    line_dash='Run', labels={'step': 'Epochs', 'value': metrics},
+                    title=f'{metrics} vs. Epochs by model')
+        else:
+            fig = px.line(data, x='step', y='value', line_group='Run', 
+                    line_dash='Run', labels={'step': 'Epochs', 'value': metrics},
+                    title=f'{metrics} vs. Epochs by model')            
 
-    #     sns.lineplot(data=data, x='step', y='value', hue='Run', palette='pastel', linewidth=2.5, ax=axes[0])
-    #     sns.lineplot(data=val_data, x='step', y='value', hue='Run', palette='pastel', linewidth=2.5, ax=axes[1])
+        
+        fig.update_xaxes(title_text='Epochs', tickfont_size=12)
+        fig.update_yaxes(title_text=metrics, tickfont_size=12)
 
-    #     axes[0].set_xlabel('Epochs', fontsize=12)
-    #     axes[0].set_ylabel(f'{metrics}', fontsize=12)
-    #     axes[0].set_title(f'{metrics} vs. Epochs by model', fontsize=14)
+        
+        fig.update_layout(title_font_size=14)
 
-    #     axes[1].set_xlabel('Epochs', fontsize=12)
-    #     axes[1].set_ylabel(f'{metrics}', fontsize=12)
-    #     axes[1].set_title(f'val_{metrics} vs. Epochs by model', fontsize=14)
 
-    #     plt.show();    
+        # axes[1].set_xlabel('Epochs', fontsize=12)
+        # axes[1].set_ylabel(f'{metrics}', fontsize=12)
+        # axes[1].set_title(f'val_{metrics} vs. Epochs by model', fontsize=14)
+
+        return fig    
 
     def plot_epochs(self, credit: bool = False):
         '''
