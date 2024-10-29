@@ -426,8 +426,10 @@ def create_model_layout(app):
             dark=True,
         ),    
         dbc.Row([
+            html.H2("Trained model performance", style={'color': 'navy', 'text-align': 'center', 'margin-bottom': '20px'}),
             dcc.Interval(id='interval', interval=10*1000, n_intervals=0),
             dbc.Col([
+                html.H4("Neural network stopped epoch per model", style={'color': 'navy', 'text-align': 'center', 'margin-bottom': '20px'}),
                 dcc.Graph(id='epochs')
             ])
         ]),
