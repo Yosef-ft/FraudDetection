@@ -9,7 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-from .layout import create_layout, create_home_layout
+from .layout import create_layout, create_home_layout, create_predictions_layout
 from Flask_app.utils import Utils
 
 def create_dash_app(flask_app):
@@ -214,6 +214,37 @@ def create_dash_app(flask_app):
         else:
             return html.Div("Failed to load data")    
         
+     
+
+    return app
+
+
+
+def create_home_app(flask_app):
+
+    app = dash.Dash(
+        __name__,
+        server=flask_app,
+        routes_pathname_prefix='/home/',
+        external_stylesheets=[dbc.themes.BOOTSTRAP]
+    )    
+
+    app.layout = create_home_layout(app)
+
+    return app
+
+
+def create_predicitons_app(flask_app):
+
+    app = dash.Dash(
+        __name__,
+        server=flask_app,
+        routes_pathname_prefix='/make-predictions/',
+        external_stylesheets=[dbc.themes.BOOTSTRAP]
+    )    
+
+    app.layout = create_predictions_layout(app)
+
     @app.callback(
         Output('output', 'children'),
         [Input('predict-button', 'n_clicks')],
@@ -246,23 +277,6 @@ def create_dash_app(flask_app):
         response = requests.post(url, data=data)
         result = response.text
 
-        return f'Result: {result}'        
-
-
-
-    return app
-
-
-
-def create_home_app(flask_app):
-
-    app = dash.Dash(
-        __name__,
-        server=flask_app,
-        routes_pathname_prefix='/home/',
-        external_stylesheets=[dbc.themes.BOOTSTRAP]
-    )    
-
-    app.layout = create_home_layout(app)
+        return f'Result: {result}'       
 
     return app
