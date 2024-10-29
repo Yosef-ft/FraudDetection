@@ -9,11 +9,12 @@ from .serve_model import predict
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.serving import run_simple
 
-from Dash_app.dashboard import create_dash_app, create_home_app
+from Dash_app.dashboard import create_dash_app, create_home_app, create_predicitons_app
 
 server = Flask(__name__)
 dash_app = create_dash_app(server)
 home_app = create_home_app(server)
+prediction_app = create_predicitons_app(server)
 
 file_handler = RotatingFileHandler('app.log', maxBytes=10240, backupCount=10)
 file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s'))
@@ -63,3 +64,8 @@ def render_dashboard():
 def read_data():
     df = pd.read_csv('data/Fraud_country_Data.csv')
     return df.to_json(orient='records')
+
+
+@server.route('/make-predicitons')
+def make_predictions():
+    return redirect('/make-predicitons')
