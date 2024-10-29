@@ -23,25 +23,25 @@ def create_layout(app):
                     dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
                     dbc.Collapse(
                         [
-                        dbc.Nav(
-                            [
-                                html.Div(
-                                    dbc.NavItem(dbc.NavLink("Home", active=True, href="#")),
-                                    style={"background-color": "lightgray", "padding": "5px", "border-radius": "5px", "margin-right": "10px"}
-                                ),
-                                html.Div(
-                                    dbc.NavItem(dbc.NavLink("Summary of Dataset", href="#")),
-                                    style={"background-color": "lightgray", "padding": "5px", "border-radius": "5px", "margin-right": "10px"}
-                                ),
-                                html.Div(
-                                    dbc.NavItem(dbc.NavLink("Predict Transaction", href="#")),
-                                    style={"background-color": "lightgray", "padding": "5px", "border-radius": "5px", "margin-right": "10px"}
-                                ),
-                                html.Div(
-                                    dbc.NavItem(dbc.NavLink("Dashboard", href="#")),
-                                    style={"background-color": "lightgray", "padding": "5px", "border-radius": "5px", "margin-right": "10px"}
-                                ),
-                            ],
+                            dbc.Nav(
+                                [
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Home", active=True, href="http://127.0.0.1:5000/home/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Summary of Dataset", href="http://127.0.0.1:5000/dataset/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Predict Transaction", href="http://127.0.0.1:5000/make-predictions/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Dashboard", href="http://127.0.0.1:5000/dashboard/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                ],
                                 className="ms-auto",
                                 navbar=True,
                             ),
@@ -52,9 +52,9 @@ def create_layout(app):
                     ),
                 ]
             ),
-            # color="dark",
-            # dark=True,
-        ),
+            color="dark",
+            dark=True,
+        ),    
         dbc.Row([
             html.H1("Adey Innovations Inc.", style={'textAlign': 'center', 'color': 'navy', 'font-size': '2.5em', 'margin-bottom': '10px'}),
             html.H2('Ecommerce Fraud Data Analysis', style={'textAlign': 'center', 'color': 'gray', 'font-size': '1.5em', 'font-style': 'italic', 'margin-bottom': '20px'}),
@@ -221,3 +221,86 @@ def create_layout(app):
             ])
         ])
     ], fluid=True, style={'background-color': '#f7f7f7', 'padding': '20px'})
+
+
+def create_home_layout(app):
+    return dbc.Container([
+        dbc.Navbar(
+            dbc.Container(
+                [
+                    html.A(
+                        dbc.Row(
+                            [
+                                dbc.Col(html.Img(src=LOGO, height="30px")),
+                                dbc.Col(dbc.NavbarBrand("Adey Innovations Inc.", className="ms-2")),
+                            ],
+                            align="center",
+                            className="g-0",
+                        ),
+                        href="#",
+                        style={"textDecoration": "none"},
+                    ),
+                    dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
+                    dbc.Collapse(
+                        [
+                            dbc.Nav(
+                                [
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Home", active=True, href="http://127.0.0.1:5000/home/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Summary of Dataset", href="http://127.0.0.1:5000/dataset/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Predict Transaction", href="http://127.0.0.1:5000/make-predictions/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Dashboard", href="http://127.0.0.1:5000/dashboard/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                ],
+                                className="ms-auto",
+                                navbar=True,
+                            ),
+                        ],
+                        id="navbar-collapse",
+                        is_open=False,
+                        navbar=True,
+                    ),
+                ]
+            ),
+            color="dark",
+            dark=True,
+        ),    
+        html.Div(
+            [
+                html.H1("Welcome to Adey Innovations Inc.", style={"text-align": "center", "color": "darkblue"}),
+                html.Hr(),
+                html.H2("Overview", style={"color": "darkblue"}),
+                html.P(
+                    "Adey Innovations Inc., a top company in the financial technology sector. "
+                    "This project aims to create accurate and strong fraud detection models that handle the unique challenges of transaction data. "
+                    "It also includes using geolocation analysis and transaction pattern recognition to improve detection."
+                ),
+                html.H2("Business Need", style={"color": "darkblue"}),
+                html.P(
+                    "Good fraud detection greatly improves transaction security. By using advanced machine learning models and detailed data analysis, Adey Innovations Inc. can spot fraudulent activities more accurately. "
+                    "This helps prevent financial losses and builds trust with customers and financial institutions. A well-designed fraud detection system also makes real-time monitoring and reporting more efficient, allowing businesses to act quickly and reduce risks."
+                ),
+                html.P(
+                    "This project will involve:",
+                    style={"font-weight": "bold"}
+                ),
+                html.Ul([
+                    html.Li("Analyzing and preprocessing transaction data."),
+                    html.Li("Creating and engineering features that help identify fraud patterns."),
+                    html.Li("Building and training machine learning models to detect fraud."),
+                    html.Li("Evaluating model performance and making necessary improvements."),
+                    html.Li("Deploying the models for real-time fraud detection and setting up monitoring for continuous improvement.")
+                ]),
+            ], style={'padding': '20px', 'color': 'black'}
+        )    
+    ], fluid=True, style={'padding': '20px'})
