@@ -9,7 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-from .layout import create_layout, create_home_layout, create_predictions_layout
+from .layout import create_layout, create_home_layout, create_predictions_layout, create_model_layout
 from Flask_app.utils import Utils
 
 def create_dash_app(flask_app):
@@ -31,7 +31,7 @@ def create_dash_app(flask_app):
                   Output("data-output3", "children"),
                   [Input("interval", "n_intervals")])
     def fetch_data(n):
-        # Getting data from flask
+        
         response = requests.get("http://127.0.0.1:5000/data") 
         if response.status_code == 200:
             data = pd.DataFrame(response.json())
@@ -279,4 +279,39 @@ def create_predicitons_app(flask_app):
 
         return f'Result: {result}'       
 
+    return app
+
+
+
+def create_model_app(flask_app):
+
+    utils = Utils()
+
+    app = dash.Dash(
+        __name__,
+        server=flask_app,
+        routes_pathname_prefix='/model-performance/',
+        external_stylesheets=[dbc.themes.BOOTSTRAP]
+    )    
+
+    app.layout = create_model_layout(app)
+
+    @app.callback(Output('epochs', 'figure'), Input('interval', 'n_intervals'))
+    def plot_epoch(_):
+        fig = utils.plot_epochs()
+        return fig
+    
+
+    @app.callback(Output('auc_roc-evaluation', 'figure'), 
+                  Output('precision-evaluation', 'figure'),
+                  Output('recall-evaluation', 'figure'),
+                  Output('f1-evaluation', 'figure'),
+                  Input('interval', 'n_intervals'))
+    def plot_metrics(_):
+        auc_roc = utils.plot_evaluation_model('auc_roc')
+        precision = utils.plot_evaluation_model('precision')
+        recall = utils.plot_evaluation_model('recall')
+        f1 = utils.plot_evaluation_model('f1')
+
+        return auc_roc, precision, recall, f1
     return app
