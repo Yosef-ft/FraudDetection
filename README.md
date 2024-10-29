@@ -4,10 +4,11 @@ This project aims to develop robust and accurate fraud detection models. he mode
 
 ## Project Goals
 1. Data Analysis and Preprocessing
-2. Model Building and Training
-3. Model Explainability analysis
-4. Model Deployment and API Development
-5. Build a Dashboard with Flask and Dash
+2. Tracking file changes using DVC
+3. Model Building and Training
+4. Model Explainability analysis
+5. Model Deployment and API Development
+6. Build a Dashboard with Flask and Dash
 
 ## Getting Started
 ### Prerequisites
