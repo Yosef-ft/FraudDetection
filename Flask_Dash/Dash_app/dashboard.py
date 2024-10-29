@@ -9,7 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-from .layout import create_layout
+from .layout import create_layout, create_home_layout
 from Flask_app.utils import Utils
 
 def create_dash_app(flask_app):
@@ -249,5 +249,20 @@ def create_dash_app(flask_app):
         return f'Result: {result}'        
 
 
+
+    return app
+
+
+
+def create_home_app(flask_app):
+
+    app = dash.Dash(
+        __name__,
+        server=flask_app,
+        routes_pathname_prefix='/home/',
+        external_stylesheets=[dbc.themes.BOOTSTRAP]
+    )    
+
+    app.layout = create_home_layout(app)
 
     return app
