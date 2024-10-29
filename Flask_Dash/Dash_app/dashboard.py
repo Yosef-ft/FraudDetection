@@ -1,5 +1,5 @@
 import dash
-from dash import Dash, html, dash_table, dcc, callback, Output, Input
+from dash import Dash, html, dash_table, dcc, callback, Output, Input, State
 import dash_bootstrap_components as dbc
 
 import requests
@@ -212,6 +212,42 @@ def create_dash_app(flask_app):
             return fig, fig2 , fig3, fig4
             
         else:
-            return html.Div("Failed to load data")         
+            return html.Div("Failed to load data")    
+        
+    @app.callback(
+        Output('output', 'children'),
+        [Input('predict-button', 'n_clicks')],
+        [State('purchase_value', 'value'),
+         State('purchase_time', 'value'),
+         State('signup_time', 'value'),
+         State('source', 'value'),
+         State('browser', 'value'),
+         State('sex', 'value'),
+         State('trasaction_frequency', 'value'),
+         State('country', 'value'),
+        State('age', 'value')]
+    )
+    def make_prediciton(n_clicks, purchase_value, purchase_time, signup_time,
+                        source, browser, sex, trasaction_frequency, country, age):
+        
+        url = 'http://127.0.0.1:5000//predict'
+        data = {
+            'purchase_value': purchase_value,
+            'age': age,
+            'purchase_time': purchase_time,
+            'signup_time': signup_time,
+            'source': source,
+            'browser': browser,
+            'sex': sex,
+            'trasaction_frequency': trasaction_frequency,
+            'country': country
+        }        
+
+        response = requests.post(url, data=data)
+        result = response.text
+
+        return f'Result: {result}'        
+
+
 
     return app

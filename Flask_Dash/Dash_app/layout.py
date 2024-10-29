@@ -120,5 +120,33 @@ def create_layout(app):
             dbc.Col([
                 dcc.Graph(id='age-distribution')
             ], md=6)                      
+        ]),
+        dbc.Row([
+            dbc.Col([
+                html.Div([
+                    html.H3('Enter User Data:'),
+                    html.Label('Purchase Value:'),
+                    dcc.Input(id='purchase_value', type='number', value=46),
+                    html.Label('Age:'),
+                    dcc.Input(id='age', type='number', value=34),
+                    html.Label('Purchase time:'),
+                    dcc.Input(id='purchase_time', type='datetime-local', value='2015-04-18 02:47:11'),      
+                    html.Label('Signup time:'),
+                    dcc.Input(id='signup_time', type='datetime-local', value='2015-02-18 22:55:49'),      
+                    html.Label('Source:'),
+                    dcc.Input(id='source', type='text', placeholder='Enter the source', value='SEO'),    
+                    html.Label('Browser:'),
+                    dcc.Input(id='browser', type='text', placeholder='Enter the browser type', value='Safari'),    
+                    html.Label('Sex:'),
+                    dcc.Input(id='sex', type='text', placeholder='Enter the (M) for male and (F) for female', value='M'),           
+                    html.Label('Trasaction Frequency:'),
+                    dcc.Input(id='trasaction_frequency', type='number', placeholder='Enter the total trasaction for a user', value=5),         
+                    html.Label('Country:'),
+                    dcc.Input(id='country', type='text', placeholder='Enter the country', value='Angola'),                                                                                           
+
+                    html.Button('Predict', id='predict-button'),
+                    html.Div(id='output')
+                ])
+            ])
         ])
     ], fluid=True)
