@@ -192,34 +192,6 @@ def create_layout(app):
                 dcc.Graph(id='age-distribution')
             ], md=6, className="p-3 shadow")                      
         ]),
-        dbc.Row([
-            dbc.Col([
-                html.Div([
-                    html.H3('Enter User Data:'),
-                    html.Label('Purchase Value:'),
-                    dcc.Input(id='purchase_value', type='number', value=46),
-                    html.Label('Age:'),
-                    dcc.Input(id='age', type='number', value=34),
-                    html.Label('Purchase time:'),
-                    dcc.Input(id='purchase_time', type='datetime-local', value='2015-04-18 02:47:11'),      
-                    html.Label('Signup time:'),
-                    dcc.Input(id='signup_time', type='datetime-local', value='2015-02-18 22:55:49'),      
-                    html.Label('Source:'),
-                    dcc.Input(id='source', type='text', placeholder='Enter the source', value='SEO'),    
-                    html.Label('Browser:'),
-                    dcc.Input(id='browser', type='text', placeholder='Enter the browser type', value='Safari'),    
-                    html.Label('Sex:'),
-                    dcc.Input(id='sex', type='text', placeholder='Enter the (M) for male and (F) for female', value='M'),           
-                    html.Label('Trasaction Frequency:'),
-                    dcc.Input(id='trasaction_frequency', type='number', placeholder='Enter the total trasaction for a user', value=5),         
-                    html.Label('Country:'),
-                    dcc.Input(id='country', type='text', placeholder='Enter the country', value='Angola'),                                                                                           
-
-                    html.Button('Predict', id='predict-button'),
-                    html.Div(id='output')
-                ])
-            ])
-        ])
     ], fluid=True, style={'background-color': '#f7f7f7', 'padding': '20px'})
 
 
@@ -304,3 +276,98 @@ def create_home_layout(app):
             ], style={'padding': '20px', 'color': 'black'}
         )    
     ], fluid=True, style={'padding': '20px'})
+
+
+
+def create_predictions_layout(app):
+    return dbc.Container([
+        dbc.Navbar(
+            dbc.Container(
+                [
+                    html.A(
+                        dbc.Row(
+                            [
+                                dbc.Col(html.Img(src=LOGO, height="30px")),
+                                dbc.Col(dbc.NavbarBrand("Adey Innovations Inc.", className="ms-2")),
+                            ],
+                            align="center",
+                            className="g-0",
+                        ),
+                        href="#",
+                        style={"textDecoration": "none"},
+                    ),
+                    dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
+                    dbc.Collapse(
+                        [
+                            dbc.Nav(
+                                [
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Home", active=True, href="http://127.0.0.1:5000/home/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Summary of Dataset", href="http://127.0.0.1:5000/dataset/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Predict Transaction", href="http://127.0.0.1:5000/make-predictions/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Dashboard", href="http://127.0.0.1:5000/dashboard/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                ],
+                                className="ms-auto",
+                                navbar=True,
+                            ),
+                        ],
+                        id="navbar-collapse",
+                        is_open=False,
+                        navbar=True,
+                    ),
+                ]
+            ),
+            color="dark",
+            dark=True,
+        ),        
+        html.Div(
+            dbc.Row(
+                dbc.Col(
+                    html.Div(
+                        [
+                            html.H3('Enter User Data:', style={'text-align': 'center', 'color': 'darkblue'}),
+                            html.Div(
+                                [
+                                    html.Label('Purchase Value:', style={'margin-top': '10px'}),
+                                    dcc.Input(id='purchase_value', type='number', value=46, style={'width': '100%', 'padding': '8px', 'margin-bottom': '10px'}),
+                                    html.Label('Age:', style={'margin-top': '10px'}),
+                                    dcc.Input(id='age', type='number', value=34, style={'width': '100%', 'padding': '8px', 'margin-bottom': '10px'}),
+                                    html.Label('Purchase Time:', style={'margin-top': '10px'}),
+                                    dcc.Input(id='purchase_time', type='datetime-local', value='2015-04-18T02:47', style={'width': '100%', 'padding': '8px', 'margin-bottom': '10px'}),
+                                    html.Label('Signup Time:', style={'margin-top': '10px'}),
+                                    dcc.Input(id='signup_time', type='datetime-local', value='2015-02-18T22:55', style={'width': '100%', 'padding': '8px', 'margin-bottom': '10px'}),
+                                    html.Label('Source:', style={'margin-top': '10px'}),
+                                    dcc.Input(id='source', type='text', placeholder='Enter the source', value='SEO', style={'width': '100%', 'padding': '8px', 'margin-bottom': '10px'}),
+                                    html.Label('Browser:', style={'margin-top': '10px'}),
+                                    dcc.Input(id='browser', type='text', placeholder='Enter the browser type', value='Safari', style={'width': '100%', 'padding': '8px', 'margin-bottom': '10px'}),
+                                    html.Label('Sex:', style={'margin-top': '10px'}),
+                                    dcc.Input(id='sex', type='text', placeholder='Enter (M) for male or (F) for female', value='M', style={'width': '100%', 'padding': '8px', 'margin-bottom': '10px'}),
+                                    html.Div(className='input-line', children=[
+                                        html.Label('Transaction Frequency:', style={'padding-top': '10px'}),
+                                        dcc.Input(id='trasaction_frequency', type='number', placeholder='Enter the total transactions for a user', value=5, style={'flex': '1', 'border': 'none', 'border-bottom': '1px solid #888', 'padding': '8px'}),
+                                    ]),
+                                    html.Label('Country:', style={'margin-top': '10px'}),
+                                    dcc.Input(id='country', type='text', placeholder='Enter the country', value='Angola', style={'width': '100%', 'padding': '8px', 'margin-bottom': '10px'}),
+                                ],
+                                style={'padding': '10px', 'border': '1px solid #ddd', 'border-radius': '5px'}
+                            ),
+                            html.Button('Predict', id='predict-button', style={'margin-top': '20px', 'background-color': 'darkblue', 'color': 'white', 'border-radius': '5px'}),
+                            html.Div(id='output', style={'margin-top': '20px', 'text-align': 'center', 'font-weight': 'bold'})
+                        ],
+                        style={'max-width': '600px', 'margin': 'auto'}
+                    )
+                )
+            )
+        )
+    ], fluid=True, style={'padding': '20px'})        
