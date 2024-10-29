@@ -433,18 +433,50 @@ def create_model_layout(app):
         ]),
         dbc.Row([
             dbc.Col([
-                dcc.Graph(id='auc_roc-evaluation')
-            ], md=6),
-            dbc.Col([
-                dcc.Graph(id='precision-evaluation')
-            ], md=6)
-        ]),
+                html.H4("Model metrics evaluation", style={'color': 'navy', 'text-align': 'center', 'margin-bottom': '20px'}),
+                    html.Div(
+                        dcc.RadioItems(
+                            id='metrics-value',
+                            options=[
+                                {'label': 'AUC-ROC', 'value': 'auc_roc'},
+                                {'label': 'Precision', 'value': 'precision'},
+                                {'label': 'Recall', 'value': 'recall'},
+                                {'label': 'f1', 'value': 'f1'},
+                            ],
+                            value='precision',
+                            inline=True,
+                            style={'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'},
+                            labelStyle={'margin-right': '20px'}
+                    ),
+                ),
+                dcc.Graph(id='metrics-plots', style={'margin-top': '20px'})
+            ], className="p-3 shadow", style={'background-color': 'white', 'border-radius': '10px', 'box-shadow': '0 0 10px rgba(0, 0, 0, 0.1)'})
+        ]),      
         dbc.Row([
             dbc.Col([
-                dcc.Graph(id='recall-evaluation')
-            ], md=6),
-            dbc.Col([
-                dcc.Graph(id='f1-evaluation')
-            ], md=6)
-        ])        
+                html.H4("Neural network Model metrics evaluation", style={'color': 'navy', 'text-align': 'center', 'margin-bottom': '20px'}),
+                    html.Div(
+                        dcc.RadioItems(
+                            id='neruron-metrics-value',
+                            options=[
+                                {'label': 'Validation Accuracy', 'value': 'val_accuracy'},
+                                {'label': 'Validation Precision', 'value': 'val_precision'},
+                                {'label': 'Validation Recall', 'value': 'val_recall'},
+                                {'label': 'Validation f1', 'value': 'val_f1_score'},
+                                {'label': 'Validation Loss', 'value': 'val_loss'},
+                                {'label': 'Accuracy', 'value': 'accuracy'},
+                                {'label': 'Precision', 'value': 'precision'},
+                                {'label': 'Recall', 'value': 'recall'},
+                                {'label': 'f1', 'value': 'f1_score'},
+                                {'label': 'Loss', 'value': 'loss'},                                
+                            ],
+                            value='precision',
+                            inline=True,
+                            style={'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'},
+                            labelStyle={'margin-right': '20px'}
+                    ),
+                ),                           
+                dcc.Graph(id='metrics-neuron', style={'margin-top': '20px'})
+            ], className="p-3 shadow", style={'background-color': 'white', 'border-radius': '10px', 'box-shadow': '0 0 10px rgba(0, 0, 0, 0.1)'})
+        ]),              
     ], fluid=True, style={'padding': '20px'})          
