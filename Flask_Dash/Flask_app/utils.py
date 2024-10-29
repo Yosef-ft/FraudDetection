@@ -1,5 +1,9 @@
 import pandas as pd
 import joblib
+import plotly.express as px
+
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 class Utils:
 
@@ -106,3 +110,99 @@ class Utils:
         fraud_percentage = round((fraud_cases / total_transaction) * 100, 2)
 
         return total_transaction, fraud_cases, fraud_percentage
+
+
+    # def plot_evaluate_neurons(self, credit: bool, metrics: str):
+    #     '''
+    #     This function is used to evaluate trained neural network models
+
+    #     Parameter:
+    #     ----------
+    #         credit(bool): This is used to to identify which dataset to use
+        
+    #     '''
+
+    #     if credit:
+    #         data = pd.read_csv(f'../report/creditCard_Models/{metrics}.csv')
+    #         val_data = pd.read_csv(f'../report/creditCard_Models/val_{metrics}.csv')
+    #     else:
+    #         data = pd.read_csv(f'../report/Fraud_models/{metrics}.csv')
+    #         val_data = pd.read_csv(f'../report/Fraud_models/val_{metrics}.csv')
+        
+    #     fig, axes = plt.subplots(ncols=2, nrows=1, figsize=(18,8))
+
+    #     sns.set_style("whitegrid")
+
+    #     sns.lineplot(data=data, x='step', y='value', hue='Run', palette='pastel', linewidth=2.5, ax=axes[0])
+    #     sns.lineplot(data=val_data, x='step', y='value', hue='Run', palette='pastel', linewidth=2.5, ax=axes[1])
+
+    #     axes[0].set_xlabel('Epochs', fontsize=12)
+    #     axes[0].set_ylabel(f'{metrics}', fontsize=12)
+    #     axes[0].set_title(f'{metrics} vs. Epochs by model', fontsize=14)
+
+    #     axes[1].set_xlabel('Epochs', fontsize=12)
+    #     axes[1].set_ylabel(f'{metrics}', fontsize=12)
+    #     axes[1].set_title(f'val_{metrics} vs. Epochs by model', fontsize=14)
+
+    #     plt.show();    
+
+    def plot_epochs(self, credit: bool = False):
+        '''
+        This function plots the stopped epochs for a given dataset:
+
+        Parameter:
+        ---------
+            credit(bool): This is used to to identify which dataset to use
+        '''
+        if credit:
+            epochs = pd.read_csv(f'../report/creditCard_Models/stopped_epoch.csv')
+        else: 
+            epochs = pd.read_csv(f'../report/Fraud_Models/stopped_epoch.csv')
+        epochs.dropna(inplace=True)
+        epochs.sort_values('stopped_epoch', inplace= True)
+
+        fig = px.bar(epochs, x='Run', y='stopped_epoch', barmode='group', labels={'Run': 'Models', 'stopped_epoch': 'Stopped Epochs'},
+                    title='Stopped epoch per model')
+        
+        return fig
+
+
+    def plot_evaluation_model(self, metrics):
+        '''
+        This is used to evaluate trained scikit learn modles
+
+        Parameter:
+        ----------
+            metrics(str): auc_roc, precision, recall, f1
+        '''
+        
+        auc_roc = pd.read_csv('../report/Fraud_Models/AUC-ROC.csv')
+        auc_roc.dropna(inplace=True)
+
+        precision = pd.read_csv('../report/Fraud_Models/Precision (1).csv')
+        precision.dropna(inplace=True)
+
+        recall = pd.read_csv('../report/Fraud_Models/Recall (1).csv')
+        recall.dropna(inplace=True)
+
+        f1 = pd.read_csv('../report/Fraud_Models/f1.csv')
+        f1.dropna(inplace=True)    
+
+        if metrics == 'auc_roc':
+            fig = px.bar(auc_roc, x='AUC-ROC', y='Run', barmode='group', labels={'Run': 'Models', 'AUC-ROC': 'AUC-ROC'},
+                    title='AUC-ROC per model')
+            
+        elif metrics == 'precision':
+            fig = px.bar(precision, x='Precision', y='Run', barmode='group', labels={'Run': 'Models', 'Precision': 'Precision'},
+                    title='Precision per model')
+            
+        elif metrics == 'recall':
+            fig = px.bar(recall, x='Recall', y='Run', barmode='group', labels={'Run': 'Models', 'Recall': 'Recall'},
+                    title='Recall per model')  
+
+        elif metrics == 'f1':
+            fig = px.bar(f1, x='f1', y='Run', barmode='group', labels={'Run': 'Models', 'f1': 'F1 score'},
+                    title='F1 score per model')                   
+
+        
+        return fig
