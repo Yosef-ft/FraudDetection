@@ -302,16 +302,19 @@ def create_model_app(flask_app):
         return fig
     
 
-    @app.callback(Output('auc_roc-evaluation', 'figure'), 
-                  Output('precision-evaluation', 'figure'),
-                  Output('recall-evaluation', 'figure'),
-                  Output('f1-evaluation', 'figure'),
-                  Input('interval', 'n_intervals'))
-    def plot_metrics(_):
-        auc_roc = utils.plot_evaluation_model('auc_roc')
-        precision = utils.plot_evaluation_model('precision')
-        recall = utils.plot_evaluation_model('recall')
-        f1 = utils.plot_evaluation_model('f1')
+    @app.callback(Output('metrics-plots', 'figure'), 
+                  Input('metrics-value', 'value'))
+    def plot_metrics(metrics_value):
+        fig = utils.plot_evaluation_model(metrics_value)
 
-        return auc_roc, precision, recall, f1
+        return fig
+    
+    @app.callback(Output('metrics-neuron', 'figure'), 
+                  Input('neruron-metrics-value', 'value'))
+    def plot_neuron_metrics(neuron_metrics):
+        fig = utils.plot_evaluate_neurons(neuron_metrics)
+
+        return fig
+
+
     return app
