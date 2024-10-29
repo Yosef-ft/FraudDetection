@@ -9,10 +9,11 @@ from .serve_model import predict
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.serving import run_simple
 
-from Dash_app.dashboard import create_dash_app
+from Dash_app.dashboard import create_dash_app, create_home_app
 
 server = Flask(__name__)
 dash_app = create_dash_app(server)
+home_app = create_home_app(server)
 
 file_handler = RotatingFileHandler('app.log', maxBytes=10240, backupCount=10)
 file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s'))
@@ -47,6 +48,10 @@ def prediction():
     
     return result
 
+
+@server.route('/')
+def home():
+    return redirect('/home')
 
 
 @server.route('/dashboard/')
