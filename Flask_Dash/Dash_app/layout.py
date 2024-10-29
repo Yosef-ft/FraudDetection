@@ -30,7 +30,7 @@ def create_layout(app):
                                         style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
                                     ),
                                     html.Div(
-                                        dbc.NavItem(dbc.NavLink("Summary of Dataset", href="http://127.0.0.1:5000/dataset/")),
+                                        dbc.NavItem(dbc.NavLink("Model Performance", href="http://127.0.0.1:5000/model-performance/")),
                                         style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
                                     ),
                                     html.Div(
@@ -222,7 +222,7 @@ def create_home_layout(app):
                                         style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
                                     ),
                                     html.Div(
-                                        dbc.NavItem(dbc.NavLink("Summary of Dataset", href="http://127.0.0.1:5000/dataset/")),
+                                        dbc.NavItem(dbc.NavLink("Model Performance", href="http://127.0.0.1:5000/model-performance/")),
                                         style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
                                     ),
                                     html.Div(
@@ -306,7 +306,7 @@ def create_predictions_layout(app):
                                         style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
                                     ),
                                     html.Div(
-                                        dbc.NavItem(dbc.NavLink("Summary of Dataset", href="http://127.0.0.1:5000/dataset/")),
+                                        dbc.NavItem(dbc.NavLink("Model Performance", href="http://127.0.0.1:5000/model-performance/")),
                                         style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
                                     ),
                                     html.Div(
@@ -370,4 +370,81 @@ def create_predictions_layout(app):
                 )
             )
         )
-    ], fluid=True, style={'padding': '20px'})        
+    ], fluid=True, style={'padding': '20px'})     
+
+
+def create_model_layout(app):
+    return dbc.Container([
+        dbc.Navbar(
+            dbc.Container(
+                [
+                    html.A(
+                        dbc.Row(
+                            [
+                                dbc.Col(html.Img(src=LOGO, height="30px")),
+                                dbc.Col(dbc.NavbarBrand("Adey Innovations Inc.", className="ms-2")),
+                            ],
+                            align="center",
+                            className="g-0",
+                        ),
+                        href="#",
+                        style={"textDecoration": "none"},
+                    ),
+                    dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
+                    dbc.Collapse(
+                        [
+                            dbc.Nav(
+                                [
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Home", active=True, href="http://127.0.0.1:5000/home/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Model Performance", href="http://127.0.0.1:5000/model-performance/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Predict Transaction", href="http://127.0.0.1:5000/make-predictions/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                    html.Div(
+                                        dbc.NavItem(dbc.NavLink("Dashboard", href="http://127.0.0.1:5000/dashboard/")),
+                                        style={"background-color": "darkblue", "color": "white", "padding": "10px", "border-radius": "5px", "margin-right": "10px"}
+                                    ),
+                                ],
+                                className="ms-auto",
+                                navbar=True,
+                            ),
+                        ],
+                        id="navbar-collapse",
+                        is_open=False,
+                        navbar=True,
+                    ),
+                ]
+            ),
+            color="dark",
+            dark=True,
+        ),    
+        dbc.Row([
+            dcc.Interval(id='interval', interval=10*1000, n_intervals=0),
+            dbc.Col([
+                dcc.Graph(id='epochs')
+            ])
+        ]),
+        dbc.Row([
+            dbc.Col([
+                dcc.Graph(id='auc_roc-evaluation')
+            ], md=6),
+            dbc.Col([
+                dcc.Graph(id='precision-evaluation')
+            ], md=6)
+        ]),
+        dbc.Row([
+            dbc.Col([
+                dcc.Graph(id='recall-evaluation')
+            ], md=6),
+            dbc.Col([
+                dcc.Graph(id='f1-evaluation')
+            ], md=6)
+        ])        
+    ], fluid=True, style={'padding': '20px'})          
