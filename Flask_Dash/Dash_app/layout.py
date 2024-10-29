@@ -1,98 +1,166 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
+from dash_bootstrap_components._components.Container import Container
 
+LOGO = "https://th.bing.com/th/id/OIP.GrU9y8BMAgsJzE1R8K020QHaE8?w=1380&h=920&rs=1&pid=ImgDetMain"
 def create_layout(app):
     return dbc.Container([
+        dbc.Navbar(
+            dbc.Container(
+                [
+                    html.A(
+                        dbc.Row(
+                            [
+                                dbc.Col(html.Img(src=LOGO, height="30px")),
+                                dbc.Col(dbc.NavbarBrand("Adey Innovations Inc.", className="ms-2")),
+                            ],
+                            align="center",
+                            className="g-0",
+                        ),
+                        href="#",
+                        style={"textDecoration": "none"},
+                    ),
+                    dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
+                    dbc.Collapse(
+                        [
+                        dbc.Nav(
+                            [
+                                html.Div(
+                                    dbc.NavItem(dbc.NavLink("Home", active=True, href="#")),
+                                    style={"background-color": "lightgray", "padding": "5px", "border-radius": "5px", "margin-right": "10px"}
+                                ),
+                                html.Div(
+                                    dbc.NavItem(dbc.NavLink("Summary of Dataset", href="#")),
+                                    style={"background-color": "lightgray", "padding": "5px", "border-radius": "5px", "margin-right": "10px"}
+                                ),
+                                html.Div(
+                                    dbc.NavItem(dbc.NavLink("Predict Transaction", href="#")),
+                                    style={"background-color": "lightgray", "padding": "5px", "border-radius": "5px", "margin-right": "10px"}
+                                ),
+                                html.Div(
+                                    dbc.NavItem(dbc.NavLink("Dashboard", href="#")),
+                                    style={"background-color": "lightgray", "padding": "5px", "border-radius": "5px", "margin-right": "10px"}
+                                ),
+                            ],
+                                className="ms-auto",
+                                navbar=True,
+                            ),
+                        ],
+                        id="navbar-collapse",
+                        is_open=False,
+                        navbar=True,
+                    ),
+                ]
+            ),
+            # color="dark",
+            # dark=True,
+        ),
         dbc.Row([
-            html.H1("Adey Innovations Inc.", style={'textAlign': 'center'}),
-            html.H2('Ecommerce Fraud data analysis', style={'textAlign': 'center'}),
+            html.H1("Adey Innovations Inc.", style={'textAlign': 'center', 'color': 'navy', 'font-size': '2.5em', 'margin-bottom': '10px'}),
+            html.H2('Ecommerce Fraud Data Analysis', style={'textAlign': 'center', 'color': 'gray', 'font-size': '1.5em', 'font-style': 'italic', 'margin-bottom': '20px'}),
             html.Br()
         ], style={'marginBottom': '20px'}),
         dbc.Row([
-            html.H3("Transaction and fraud summary for all known and unknown countries"),
+            html.H4("Summary of Transactions and Fraud for Identified Countries", style={'color': 'darkblue', 'text-align': 'center', 'font-style': 'italic', 'margin-bottom': '20px'}),
             dcc.Interval(id='interval', interval=60*1000, n_intervals=0),
             dbc.Col([
-                dbc.Card([
+                dbc.Card(
                     dbc.CardBody([
-                        dbc.CardHeader("Total Trasactions"),
-                        dbc.CardBody(id="data-output"),
-                        dbc.CardFooter('This calculation includes unknown countries')
-                    ])
-                ])
+                        dbc.CardHeader("Total Transactions", className="text-center text-primary"),
+                        html.H2(id="data-output", className="text-center text-info"),
+                        # dbc.CardFooter('This calculation includes unknown countries', className="text-center text-muted")
+                    ]),
+                    className="p-3 shadow"
+                )
             ], md=4),
             dbc.Col([
-                dbc.Card([
+                dbc.Card(
                     dbc.CardBody([
-                        dbc.CardHeader("Total fraud cases"),
-                        dbc.CardBody(id="data-output2"),
-                        dbc.CardFooter('This calculation includes unknown countries')
-                    ])
-                ])
+                        dbc.CardHeader("Total Fraud Cases", className="text-center text-danger"),
+                        html.H2(id="data-output2", className="text-center text-danger"),
+                        # dbc.CardFooter('This calculation includes unknown countries', className="text-center text-muted")
+                    ]),
+                    className="p-3 shadow"
+                )
             ], md=4),
             dbc.Col([
-                dbc.Card([
+                dbc.Card(
                     dbc.CardBody([
-                        dbc.CardHeader("Fraud Percentage"),
-                        dbc.CardBody(id="data-output3"),
-                        dbc.CardFooter('This calculation includes unknown countries')
-                    ])
-                ])
-            ], md=4),
-        ], style={'marginBottom': '20px'}),
-        dbc.Row([
-            html.H3("Transaction and fraud summary for known countires countries"),
-            dbc.Col([
-                dbc.Card([
-                    dbc.CardBody([
-                        dbc.CardHeader("Total Trasactions"),
-                        dbc.CardBody(id="data-output4"),
-                        dbc.CardFooter('This calculation is only for trasactions with identified country')
-                    ])
-                ])
-            ], md=4),
-            dbc.Col([
-                dbc.Card([
-                    dbc.CardBody([
-                        dbc.CardHeader("Total fraud cases"),
-                        dbc.CardBody(id="data-output5"),
-                        dbc.CardFooter('This calculation is only for trasactions with identified country')
-                    ])
-                ])
-            ], md=4),
-            dbc.Col([
-                dbc.Card([
-                    dbc.CardBody([
-                        dbc.CardHeader("Fraud Percentage"),
-                        dbc.CardBody(id="data-output6"),
-                        dbc.CardFooter('This calculation is only for trasactions with identified country')
-                    ])
-                ])
+                        dbc.CardHeader("Fraud Percentage", className="text-center text-warning"),
+                        html.H2(id="data-output3", className="text-center text-warning"),
+                        # dbc.CardFooter('This calculation includes unknown countries', className="text-center text-muted")
+                    ]),
+                    className="p-3 shadow"
+                )
             ], md=4),
         ], style={'marginBottom': '20px'}),
         dbc.Row([
+            html.H4("Summary of Transactions and Fraud Across Known and Unknown Countries", style={'color': 'darkblue', 'text-align': 'center', 'font-style': 'italic', 'margin-bottom': '20px'}),
             dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        dbc.CardHeader("Total Trasactions", className="text-center text-primary"),
+                        html.H2(id="data-output4", className="text-center text-info"),
+                        # dbc.CardFooter('This calculation is only for trasactions with identified country')
+                    ])
+                ], className="p-3 shadow")
+            ], md=4),
+            dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        dbc.CardHeader("Total fraud cases", className="text-center text-danger"),
+                        html.H2(id="data-output5", className="text-center text-danger"),
+                        # dbc.CardFooter('This calculation is only for trasactions with identified country')
+                    ])
+                ], className="p-3 shadow")
+            ], md=4),
+            dbc.Col([
+                dbc.Card([
+                    dbc.CardBody([
+                        dbc.CardHeader("Fraud Percentage", className="text-center text-warning"),
+                        html.H2(id="data-output6", className="text-center text-warning"),
+                        # dbc.CardFooter('This calculation is only for trasactions with identified country')
+                    ])
+                ], className="p-3 shadow")
+            ], md=4),
+        ], style={'marginBottom': '20px'}),
+        dbc.Row([
+            dbc.Col([
+                html.H4("Geographical Analysis", style={'color': 'darkblue', 'text-align': 'center', 'font-style': 'italic', 'margin-bottom': '20px'}),
                 dcc.Graph(id='geographic-plots'),
-            ])
+            ], className="p-3 shadow")
         ]),
         dbc.Row([
             dbc.Col([
+                html.H4("Browser Distribution of Fraud Cases", style={'color': 'darkblue', 'text-align': 'center', 'font-style': 'italic', 'margin-bottom': '20px'}),
                 dcc.Graph(id='browser-fraud'),
-            ])
+            ],  className="p-3 shadow")
         ]),
         dbc.Row([
             dbc.Col([
-                html.H3("Timeseries analysis"),
-                html.Div(dcc.RadioItems(
-                    ['Date', 'Month', 'Day', 'Hour', 'Minutes'],
-                    'Day',
-                    id='time-value', 
-                    inline=True,
-                ), style={"margin-right": "30px"}),
-                dcc.Graph(id='timeseries-plots')
-            ])
+                html.H4("Timeseries Analysis", style={'color': 'navy', 'text-align': 'center', 'margin-bottom': '20px'}),
+                html.Div(
+                    dcc.RadioItems(
+                        id='time-value',
+                        options=[
+                            {'label': 'Date', 'value': 'Date'},
+                            {'label': 'Month', 'value': 'Month'},
+                            {'label': 'Day', 'value': 'Day'},
+                            {'label': 'Hour', 'value': 'Hour'},
+                            {'label': 'Minutes', 'value': 'Minutes'}
+                        ],
+                        value='Day',
+                        inline=True,
+                        style={'display': 'flex', 'justify-content': 'space-between', 'margin-top': '10px'},
+                        labelStyle={'margin-right': '20px'}
+                    ),
+                ),
+                dcc.Graph(id='timeseries-plots', style={'margin-top': '20px'})
+            ], className="p-3 shadow", style={'background-color': 'white', 'border-radius': '10px', 'box-shadow': '0 0 10px rgba(0, 0, 0, 0.1)'})
         ]),
         dbc.Row([
             dbc.Col([
+                html.H4("Device ID Distribution of Fraud Cases", style={'color': 'darkblue', 'text-align': 'center', 'font-style': 'italic', 'margin-bottom': '20px'}),
                 dcc.Graph(id='device-distribution'),
                 html.Div(dcc.Slider(
                     min=100,
@@ -103,23 +171,26 @@ def create_layout(app):
                     
                 ), style={'width': '49%', 'padding': '0px 20px 20px 20px'}),
 
-            ])
+            ], className="p-3 shadow")
         ]),
         dbc.Row([
+            html.Br(),
+            html.Br(),
+            html.H4("Bivariant Analysis", style={'color': 'darkblue', 'text-align': 'center', 'font-style': 'italic', 'margin-bottom': '20px'}),
             dbc.Col([
                 dcc.Graph(id='gender-distribution')
-            ], md= 6),
+            ], md= 6, className="p-3 shadow"),
             dbc.Col([
                 dcc.Graph(id='browser-distribution')
-            ], md=6),
+            ], md=6, className="p-3 shadow"),
         ]), 
         dbc.Row([
             dbc.Col([
                 dcc.Graph(id='source-distribution')
-            ], md=6),       
+            ], md=6, className="p-3 shadow"),       
             dbc.Col([
                 dcc.Graph(id='age-distribution')
-            ], md=6)                      
+            ], md=6, className="p-3 shadow")                      
         ]),
         dbc.Row([
             dbc.Col([
@@ -149,4 +220,4 @@ def create_layout(app):
                 ])
             ])
         ])
-    ], fluid=True)
+    ], fluid=True, style={'background-color': '#f7f7f7', 'padding': '20px'})
