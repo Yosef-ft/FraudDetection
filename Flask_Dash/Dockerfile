@@ -2,7 +2,7 @@
 FROM python:3.9
 
 # Set the working directory in the container
-WORKDIR /flask_app/app
+WORKDIR /Flask_Dash/app
 
 # Copy the current directory contents into the container at /app
 COPY . .
@@ -14,4 +14,4 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Run serve_model.py when the container launches
-CMD ["python", "-m", "flask","--app", "routes", "run", "--host=0.0.0.0", "--port=5000"]
+CMD ["python", "-m", "flask","--app", "Flask_app/routes", "run", "--host=0.0.0.0", "--port=5000", "--debug"]
